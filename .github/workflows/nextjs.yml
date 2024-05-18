@@ -1,0 +1,15 @@
+import { readFileSync } from 'node:fs';
+import loadTrackerDB from '@ghostery/trackerdb';
+
+const engine = readFileSync('./node_modules/@ghostery/trackerdb/dist/trackerdb.engine');
+const trackerDB = await loadTrackerDB(engine);
+
+const domainMatches = await trackerDB.matchDomain('google.com');
+
+const urlMatches = await trackerDB.matchUrl({
+    url: 'https://google.com/gen_204',
+    type: 'xhr',
+    sourceUrl: 'https://google.com/'
+}, {
+    getDomainMetadata: true,
+});
